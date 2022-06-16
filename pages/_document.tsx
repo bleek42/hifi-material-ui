@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { NextPageContext } from 'next';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import createEmotionServer from '@emotion/server/create-instance';
 import {
@@ -13,6 +12,8 @@ import { EmotionCache } from '@emotion/cache';
 import { emotionCache } from '../shared/emotionCache';
 import { theme } from '../shared/themes';
 
+import type { EmotionCriticalToChunks } from '@emotion/server/create-instance';
+
 export default class CustomNextDocument extends Document {
   static async getInitialProps(
     ctx: DocumentContext
@@ -25,7 +26,6 @@ export default class CustomNextDocument extends Document {
     try {
       ctx.renderPage = () =>
         origRenderPage({
-          // eslint-disable-next-line react/display-name
           enhanceApp:
             // eslint-disable-next-line react/display-name
             (App: AppType | React.ComponentType<{ emotionCache: EmotionCache }>) => (props) =>
@@ -37,6 +37,8 @@ export default class CustomNextDocument extends Document {
               ),
         });
 
+      console.info(cache.sheet.tags);
+
       const emotionStyles = extractCriticalToChunks(initialProps.html);
       const emotionStyleTags = emotionStyles.styles.map((style) => (
         <style
@@ -46,17 +48,24 @@ export default class CustomNextDocument extends Document {
         />
       ));
 
+      console.table(emotionStyles);
+
       return {
         ...initialProps,
         styles: [...React.Children.toArray(initialProps.styles), ...emotionStyleTags],
       };
     } catch (err: unknown) {
+      console.error({ error: err ? err : 'caught an error' });
       return {
         ...initialProps,
         // error: err ? err : 'Error rendering custom styles...'
       };
     } finally {
-      console.log(initialProps);
+      console.info(
+        initialProps?.html?.valueOf(),
+        initialProps?.head?.valueOf(),
+        initialProps?.styles?.valueOf()
+      );
     }
   }
   render() {
@@ -74,10 +83,6 @@ export default class CustomNextDocument extends Document {
           <link
             rel="icon"
             href="/favicon.ico"
-          />
-          <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
           />
         </Head>
         <body>

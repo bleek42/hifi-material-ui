@@ -2,7 +2,7 @@ import { AppBar, Toolbar } from '@mui/material';
 
 import { ElevationScroll } from '../utils/ElevationScroll';
 
-const Heading = () => {
+const NavHeader = () => {
   return (
     <ElevationScroll>
       <AppBar position="fixed">
@@ -12,4 +12,4 @@ const Heading = () => {
   );
 };
 
-export default Heading;
+export default NavHeader;

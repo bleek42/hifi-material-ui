@@ -6,11 +6,10 @@ import { ThemeProvider, CssBaseline, createTheme } from '@mui/material';
 import { emotionCache } from '../shared/emotionCache';
 import { theme } from '../shared/themes';
 
-import '@fontsource/roboto/300.css';
+import * as robotoFont from '@fontsource/roboto';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-import '../styles/globals.css';
 
 interface EmotionAppProps extends AppProps {
   emotionCache?: EmotionCache;
@@ -23,7 +22,7 @@ function MyApp({ Component, pageProps, emotionCache = clientSideCache }: Emotion
   return (
     <CacheProvider value={emotionCache}>
       <ThemeProvider theme={currentTheme}>
-        <CssBaseline />
+        <CssBaseline enableColorScheme />
         <Component {...pageProps} />
       </ThemeProvider>
     </CacheProvider>
