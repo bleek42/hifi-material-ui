@@ -2,6 +2,9 @@
   "name": "hifi-material-ui",
   "version": "0.1.0",
   "private": true,
+  "keywords": [
+    "React", "Next.js", "TypeScript", "Material UI", "Emotion", "server side rendering", "Udemy", "front end", "web development", "course"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",
