@@ -6,7 +6,6 @@ import { ThemeProvider, CssBaseline, createTheme } from '@mui/material';
 import { emotionCache } from '../shared/emotionCache';
 import { theme } from '../shared/themes';
 
-import * as robotoFont from '@fontsource/roboto';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';

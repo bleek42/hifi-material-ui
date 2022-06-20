@@ -1,11 +1,12 @@
-import type { Component, FC, ReactNode } from 'react';
 import Head from 'next/head';
 
-import type { MetaProps } from '../types/component.props';
+import type { MetaProps } from '../types/meta.props';
+
 import NavHeader from './NavHeader';
 import Footer from './Footer';
 
 const Meta = ({ children, title, description, keywords, siteUrl, imgUrl }: MetaProps) => {
+  console.log({ metaProps: { title, description, keywords, siteUrl, imgUrl } });
   return (
     <>
       <Head>

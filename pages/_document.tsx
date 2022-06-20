@@ -9,10 +9,10 @@ import {
 } from 'next/dist/shared/lib/utils';
 import { EmotionCache } from '@emotion/cache';
 
+import type { EmotionCriticalToChunks } from '@emotion/server/create-instance';
+
 import { emotionCache } from '../shared/emotionCache';
 import { theme } from '../shared/themes';
-
-import type { EmotionCriticalToChunks } from '@emotion/server/create-instance';
 
 export default class CustomNextDocument extends Document {
   static async getInitialProps(
@@ -23,6 +23,7 @@ export default class CustomNextDocument extends Document {
     const { extractCriticalToChunks } = createEmotionServer(cache);
     const initialProps = await Document.getInitialProps(ctx);
 
+    /* eslint-disable prettier/prettier */
     try {
       ctx.renderPage = () =>
         origRenderPage({
@@ -54,20 +55,24 @@ export default class CustomNextDocument extends Document {
         ...initialProps,
         styles: [...React.Children.toArray(initialProps.styles), ...emotionStyleTags],
       };
-    } catch (err: unknown) {
-      console.error({ error: err ? err : 'caught an error' });
+    }
+    catch (err: unknown) {
+      console.error({ error: err || 'caught an error' });
       return {
         ...initialProps,
         // error: err ? err : 'Error rendering custom styles...'
       };
-    } finally {
+    }
+    finally {
       console.info(
         initialProps?.html?.valueOf(),
         initialProps?.head?.valueOf(),
         initialProps?.styles?.valueOf()
       );
     }
+    /* eslint-enable prettier/prettier */
   }
+
   render() {
     return (
       <Html lang="en">

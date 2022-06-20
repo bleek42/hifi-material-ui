@@ -10,7 +10,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Meta
-        title="NextTSmUI App Home"
+        title="Next/TS/matUI App Home"
         description="Home section of my Next.js, TypeScript, Material UI app"
         keywords={[
           'Brandon',
