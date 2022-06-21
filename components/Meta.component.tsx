@@ -2,8 +2,8 @@ import Head from 'next/head';
 
 import type { MetaProps } from '../types/meta.props';
 
-import NavHeader from './NavHeader';
-import Footer from './Footer';
+import NavHeader from './NavHeader.component';
+import Footer from './Footer.component';
 
 const Meta = ({ children, title, description, keywords, siteUrl, imgUrl }: MetaProps) => {
   console.log({ metaProps: { title, description, keywords, siteUrl, imgUrl } });

@@ -11,7 +11,7 @@ import { EmotionCache } from '@emotion/cache';
 
 import type { EmotionCriticalToChunks } from '@emotion/server/create-instance';
 
-import { emotionCache } from '../shared/emotionCache';
+import { createMuiCache, createTssCache } from '../shared/stylesCache';
 import { theme } from '../shared/themes';
 
 export default class CustomNextDocument extends Document {
@@ -19,8 +19,10 @@ export default class CustomNextDocument extends Document {
     ctx: DocumentContext
   ): Promise<DocumentInitialProps | DocumentProps> {
     const origRenderPage = ctx?.renderPage;
-    const cache = emotionCache();
-    const { extractCriticalToChunks } = createEmotionServer(cache);
+    const muiCache = createMuiCache();
+    const tssCache = createTssCache();
+    const { extractCriticalToChunks } = createEmotionServer(muiCache);
+    const { renderStylesToString } = createEmotionServer(tssCache);
     const initialProps = await Document.getInitialProps(ctx);
 
     /* eslint-disable prettier/prettier */
@@ -29,19 +31,20 @@ export default class CustomNextDocument extends Document {
         origRenderPage({
           enhanceApp:
             // eslint-disable-next-line react/display-name
-            (App: AppType | React.ComponentType<{ emotionCache: EmotionCache }>) => (props) =>
+            (App: AppType | React.ComponentType<{ muiCache: EmotionCache, tssCache: EmotionCache }>) => (props) =>
               (
                 <App
-                  emotionCache={cache}
+                  muiCache={muiCache}
+                  tssCache={tssCache}
                   {...props}
                 />
               ),
         });
 
-      console.info(cache.sheet.tags);
+      console.info(muiCache, tssCache);
 
-      const emotionStyles = extractCriticalToChunks(initialProps.html);
-      const emotionStyleTags = emotionStyles.styles.map((style) => (
+      const muiStyles = extractCriticalToChunks(initialProps.html);
+      const muiStyleTags = muiStyles.styles.map((style) => (
         <style
           key={style.key}
           data-emotion={`${style.key} ${style.ids.join(' ')}`}
@@ -49,11 +52,11 @@ export default class CustomNextDocument extends Document {
         />
       ));
 
-      console.table(emotionStyles);
+      console.table(muiStyles);
 
       return {
         ...initialProps,
-        styles: [...React.Children.toArray(initialProps.styles), ...emotionStyleTags],
+        styles: [...React.Children.toArray(initialProps.styles), ...muiStyleTags],
       };
     }
     catch (err: unknown) {

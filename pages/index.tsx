@@ -2,9 +2,9 @@ import type { NextPage } from 'next';
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Button, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 
-import Meta from '../components/Meta';
+import Meta from '../components/Meta.component';
 
 const Home: NextPage = () => {
   return (
@@ -44,25 +44,22 @@ const Home: NextPage = () => {
           'programming',
         ]}
       >
-        <Typography variant="h4">Powered by </Typography>
-        <Button
-          variant="contained"
-          color="secondary"
-        >
+        <Box>
+          <Typography variant="h4">Powered by </Typography>
           <Link
             href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              width={72}
-              height={16}
-            />
+            <Button
+              variant="contained"
+              color="secondary"
+            >
+              Vercel
+            </Button>
           </Link>
-        </Button>
-        <div>
+        </Box>
+        <Box>
           {[...new Array(120)].map((elem, idx: number) => (
             // eslint-disable-next-line react/jsx-no-comment-textnodes
             <Typography key={idx}>
@@ -75,7 +72,7 @@ const Home: NextPage = () => {
               Cras justo odio, dapbius ac facilisis`
             </Typography>
           ))}
-        </div>
+        </Box>
       </Meta>
     </>
   );
