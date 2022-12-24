@@ -2,10 +2,13 @@
     "env": {
         "browser": true,
         "es2021": true,
-        "node": true
+        "node": true,
+		"jest": true
     },
     "extends": [
+		"eslint:recommended",
         "plugin:react/recommended",
+		"next",
         "standard",
         "prettier"
     ],
@@ -14,18 +17,57 @@
         "ecmaFeatures": {
             "jsx": true
         },
-        "ecmaVersion": "latest",
+        "ecmaVersion": 2022,
         "sourceType": "module"
     },
     "plugins": [
         "react",
+		"react-hooks",
+		"testing-library",
+		"jest",
+		"jsx-a11y",
         "@typescript-eslint",
         "prettier"
     ],
     "rules": {
-      "prettier/prettier": 1,
-      "react/react-in-jsx-scope": 0,
-      "no-unused-vars": 1,
-      "brace-style": [1, "stroustrup"]
+      "prettier/prettier": [
+			"warn",
+			{},
+			{
+				"usePrettierrc": true
+			}
+		],
+		"react/jsx-filename-extension": [
+			1,
+			{
+				"extensions": [".jsx", ".tsx"]
+			}
+		],
+		"react/function-component-definition": "off",
+		"react/self-closing-comp": "off",
+		"react/react-in-jsx-scope": "off",
+		"react/jsx-no-constructed-context-values": "warn",
+		"react/prop-types": "off",
+		"react/jsx-fragments": "warn",
+		"react/destructuring-assignment": "off",
+		"react/button-has-type": "warn",
+		"react/jsx-props-no-spreading": [
+			"warn",
+			{
+				"html": "enforce",
+				"custom": "enforce",
+				"exceptions": ["Button", "button", "FormInput", "input"]
+			}
+		],
+		"jsx-a11y/no-static-element-interactions": "warn",
+		"arrow-body-style": "off",
+		"no-unused-vars": "warn",
+		"no-console": "warn",
+		"brace-style": ["warn", "stroustrup"],
+		"no-return-await": "off",
+		"consistent-return": "warn",
+		"arrow-parens": "warn",
+		"camelcase": "warn",
+		"space-in-parens": "error"
     }
 }

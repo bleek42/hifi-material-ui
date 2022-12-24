@@ -1,8 +1,8 @@
 import { makeStyles } from 'tss-react/mui';
 import type { Theme } from '@mui/material';
 
-import { theme } from '../shared/themes';
-import NavHeader from '../components/NavHeader.component';
+import { theme } from '../src/shared/themes';
+import NavHeader from '../src/components/NavHeader.component';
 
 export const useStyles = makeStyles({ name: { NavHeader } })(
   (theme: Theme, _params: void, _classes: Record<never, string>) => ({

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
-import createEmotionServer from '@emotion/server/create-instance';
+import { }
 import {
   AppType,
   DocumentContext,
@@ -9,9 +9,7 @@ import {
 } from 'next/dist/shared/lib/utils';
 import { EmotionCache } from '@emotion/cache';
 
-import type { EmotionCriticalToChunks } from '@emotion/server/create-instance';
-
-import { createMuiCache, createTssCache } from '../shared/stylesCache';
+import emotionAndTssCache from  '../shared/stylesCache';
 import { theme } from '../shared/themes';
 
 export default class CustomNextDocument extends Document {
@@ -19,10 +17,8 @@ export default class CustomNextDocument extends Document {
     ctx: DocumentContext
   ): Promise<DocumentInitialProps | DocumentProps> {
     const origRenderPage = ctx?.renderPage;
-    const muiCache = createMuiCache();
-    const tssCache = createTssCache();
-    const { extractCriticalToChunks } = createEmotionServer(muiCache);
-    const { renderStylesToString } = createEmotionServer(tssCache);
+    const { emotionCache, tssCache } = emotionAndTssCache();
+    const { extractCriticalToChunks } = createEmotionServer(emotionCache);
     const initialProps = await Document.getInitialProps(ctx);
 
     /* eslint-disable prettier/prettier */
@@ -31,14 +27,21 @@ export default class CustomNextDocument extends Document {
         origRenderPage({
           enhanceApp:
             // eslint-disable-next-line react/display-name
-            (App: AppType | React.ComponentType<{ muiCache: EmotionCache, tssCache: EmotionCache }>) => (props) =>
+
+
               (
-                <App
-                  muiCache={muiCache}
-                  tssCache={tssCache}
-                  {...props}
-                />
-              ),
+                App:
+                  | AppType
+                  | React.ComponentType<{ muiCache: EmotionCache; tssCache: EmotionCache }>
+              ) =>
+              (props) =>
+                (
+                  <App
+                    muiCache={muiCache}
+                    tssCache={tssCache}
+                    {...props}
+                  />
+                ),
         });
 
       console.info(muiCache, tssCache);
@@ -58,15 +61,13 @@ export default class CustomNextDocument extends Document {
         ...initialProps,
         styles: [...React.Children.toArray(initialProps.styles), ...muiStyleTags],
       };
-    }
-    catch (err: unknown) {
+    } catch (err: unknown) {
       console.error({ error: err || 'caught an error' });
       return {
         ...initialProps,
         // error: err ? err : 'Error rendering custom styles...'
       };
-    }
-    finally {
+    } finally {
       console.info(
         initialProps?.html?.valueOf(),
         initialProps?.head?.valueOf(),
@@ -101,3 +102,7 @@ export default class CustomNextDocument extends Document {
     );
   }
 }
+function createEmotionServer(emotionCache: EmotionCache): { extractCriticalToChunks: any; } {
+  throw new Error('Function not implemented.');
+}
+

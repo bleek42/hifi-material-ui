@@ -1,4 +1,4 @@
-import { HrefEnum, NavigationTab } from '../types/nav.props';
+import { HrefEnum, NavigationTab } from '../../types/nav.props';
 
 export const navTabs: NavigationTab[] = [
   {

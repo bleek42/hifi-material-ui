@@ -1,6 +1,6 @@
 import Head from 'next/head';
 
-import type { MetaProps } from '../types/meta.props';
+import type { MetaProps } from '../../types/meta.props';
 
 import NavHeader from './NavHeader.component';
 import Footer from './Footer.component';
