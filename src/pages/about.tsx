@@ -1,9 +1,7 @@
 import * as React from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography } from '@material-ui/core';
 
-import type { NextPage } from 'next';
-
-const About: NextPage = () => {
+const About = () => {
   return (
     <Box>
       <Typography variant="h4">About Page</Typography>

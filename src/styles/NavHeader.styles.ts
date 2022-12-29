@@ -1,6 +1,3 @@
-import { makeStyles } from 'tss-react/mui';
-import type { Theme } from '@mui/material';
-
 import { theme } from '../shared/themes';
 import NavHeader from '../components/NavHeader.component';
 
